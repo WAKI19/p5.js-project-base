@@ -1,6 +1,35 @@
-//グローバル変数定義
+//グローバル変数定義部分
 const CANVAS_W = 640;
 const CANVAS_H = 480;
+let scaleRate; //キャンバスの拡大率
+
+let pageManager;
+
+class PageManager {
+    constructor() {
+        this.pages = {};
+        this.current = null;
+        this.currentInstance = null;
+    }
+
+    addPage(_name, _pageClass) {
+        this.pages[_name] = _pageClass;
+    }
+
+    switchPage(_name) {
+        if (this.pages[_name]) {
+            this.current = _name;
+            this.currentInstance = new this.pages[_name]();
+            this.currentInstance.setup();
+        } else {
+            console.log('ページが見つかりません');
+        }
+    }
+
+    updatePage() {
+        this.currentInstance.draw();
+    }
+}
 
 //素材読み込み
 function preload() {
@@ -10,6 +39,11 @@ function preload() {
 function setup() {
     createCanvas(CANVAS_W, CANVAS_H);
     updateCanvasSize();
+
+    pageManager = new PageManager();
+    pageManager.addPage('top', TopPage);
+
+    pageManager.switchPage('top');
 }
 
 //ウィンドウがリサイズされた時の処理
@@ -26,5 +60,25 @@ function updateCanvasSize() {
 }
 
 function draw() {
-    background(150);
+    scaleRate = height / CANVAS_H; //キャンバスの拡大率（高さで計算）
+    scale(scaleRate);
+    pageManager.updatePage();
+}
+
+//各ページの実装部分
+//基底クラス
+class Page {
+    setup() {};
+    preload() {};
+    draw() {};
+}
+
+class TopPage extends Page {
+    setup() {}
+    preload() {}
+
+    draw() {
+        background(255);
+        rect(0, 0, CANVAS_W, CANVAS_H);
+    }
 }
