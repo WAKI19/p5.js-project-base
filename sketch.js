@@ -52,7 +52,7 @@ function windowResized() {
 }
 
 function fitCanvasToWindow() {
-    // ウィンドウの高さを基準にリサイズ
+    // ウィンドウの高さを基準にリサイズし、ウィンドウに合わせる
     const h = windowHeight;
     const w = h * (CANVAS_W / CANVAS_H);
 
@@ -83,6 +83,7 @@ class TopPage extends Page {
 
     draw() {
         background(255);
-        rect(0, 0, CANVAS_W, CANVAS_H);
+        textAlign(CENTER);
+        text('トップページ', CANVAS_W / 2, CANVAS_H / 2);
     }
 }
