@@ -38,7 +38,7 @@ function preload() {
 
 function setup() {
     createCanvas(CANVAS_W, CANVAS_H);
-    updateCanvasSize();
+    fitCanvasToWindow();
 
     pageManager = new PageManager();
     pageManager.addPage('top', TopPage);
@@ -48,11 +48,11 @@ function setup() {
 
 //ウィンドウがリサイズされた時の処理
 function windowResized() {
-    updateCanvasSize();
+    fitCanvasToWindow();
 }
 
-function updateCanvasSize() {
-    // ウィンドウの高さを基準にスケーリング
+function fitCanvasToWindow() {
+    // ウィンドウの高さを基準にリサイズ
     const h = windowHeight;
     const w = h * (CANVAS_W / CANVAS_H);
 
