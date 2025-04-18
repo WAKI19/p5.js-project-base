@@ -59,9 +59,13 @@ function updateCanvasSize() {
     resizeCanvas(w, h);
 }
 
-function draw() {
+function scaling() {
     scaleRate = height / CANVAS_H; //キャンバスの拡大率（高さで計算）
     scale(scaleRate);
+}
+
+function draw() {
+    scaling();
     pageManager.updatePage();
 }
 
