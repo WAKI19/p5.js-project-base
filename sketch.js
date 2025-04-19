@@ -59,6 +59,10 @@ function fitCanvasToWindow() {
     resizeCanvas(w, h);
 }
 
+function keyPressed() {
+    pageManager.currentInstance.keyPressed();
+}
+
 function scaling() {
     scaleRate = height / CANVAS_H; //キャンバスの拡大率（高さで計算）
     scale(scaleRate);
@@ -74,12 +78,14 @@ function draw() {
 class Page {
     setup() {};
     preload() {};
+    keyPressed() {};
     draw() {};
 }
 
 class TopPage extends Page {
     setup() {}
     preload() {}
+    keyPressed() {}
 
     draw() {
         background(255);
