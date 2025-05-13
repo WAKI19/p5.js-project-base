@@ -3,30 +3,30 @@ const CANVAS_W = 640;
 const CANVAS_H = 480;
 let scaleRate; //キャンバスの拡大率
 
-let pageManager;
+let sceneManager;
 
-class PageManager {
+class SceneManager {
     constructor() {
-        this.pages = {};
+        this.scenes = {};
         this.current = null;
         this.currentInstance = null;
     }
 
-    addPage(_name, _pageClass) {
-        this.pages[_name] = _pageClass;
+    addScene(_name, _sceneClass) {
+        this.scenes[_name] = _sceneClass;
     }
 
-    switchPage(_name) {
-        if (this.pages[_name]) {
+    switchScene(_name) {
+        if (this.scenes[_name]) {
             this.current = _name;
-            this.currentInstance = new this.pages[_name]();
+            this.currentInstance = new this.scenes[_name]();
             this.currentInstance.setup();
         } else {
             console.log('ページが見つかりません');
         }
     }
 
-    updatePage() {
+    updateScene() {
         this.currentInstance.draw();
     }
 }
@@ -40,10 +40,10 @@ function setup() {
     createCanvas(CANVAS_W, CANVAS_H);
     fitCanvasToWindow();
 
-    pageManager = new PageManager();
-    pageManager.addPage('top', TopPage);
+    sceneManager = new SceneManager();
+    sceneManager.addScene('top', TitleScene);
 
-    pageManager.switchPage('top');
+    sceneManager.switchScene('top');
 }
 
 //ウィンドウがリサイズされた時の処理
@@ -60,7 +60,7 @@ function fitCanvasToWindow() {
 }
 
 function keyPressed() {
-    pageManager.currentInstance.keyPressed();
+    sceneManager.currentInstance.keyPressed();
 }
 
 function scaling() {
@@ -70,19 +70,19 @@ function scaling() {
 
 function draw() {
     scaling();
-    pageManager.updatePage();
+    sceneManager.updateScene();
 }
 
 //各ページの実装部分
 //基底クラス
-class Page {
+class Scene {
     setup() {};
     preload() {};
     keyPressed() {};
     draw() {};
 }
 
-class TopPage extends Page {
+class TitleScene extends Scene {
     setup() {}
     preload() {}
     keyPressed() {}
